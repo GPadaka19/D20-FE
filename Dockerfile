@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # Copy build hasil React ke direktori default NGINX
-COPY build/ /usr/share/nginx/html
+COPY dist/ /usr/share/nginx/html
 
 # Expose port
 EXPOSE 8080
