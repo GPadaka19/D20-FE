@@ -114,7 +114,7 @@ const DashboardOverview: React.FC = () => {
             <TEChart
               type="line"
               data={{
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "DESSSSSSSS"],
                 datasets: [
                   {
                     label: "Confidence Level",
