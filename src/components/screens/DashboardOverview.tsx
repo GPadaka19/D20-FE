@@ -3,6 +3,16 @@ import { Calendar, Map, BarChart2 } from 'lucide-react';
 import Card from '../common/Card';
 
 const DashboardOverview: React.FC = () => {
+  const confidenceData = [50, 20, 30, 60, 75, 60]; // Jan to Jun
+  const maxVal = 100;
+  const points = confidenceData
+    .map((val, idx) => {
+      const x = (idx / (confidenceData.length - 1)) * 100;
+      const y = 100 - (val / maxVal) * 100;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-6">
@@ -105,16 +115,20 @@ const DashboardOverview: React.FC = () => {
                 <span>25%</span>
                 <span>0%</span>
               </div>
-              
+
               {/* Chart area */}
               <div className="ml-8 h-full flex flex-col">
                 <div className="flex-1 border-b border-l border-gray-300 relative">
-                  {/* Line chart */}
-                  <div className="absolute inset-0 flex items-end">
-                    <div className="w-full h-[40%] border-t-2 border-gray-400"></div>
-                  </div>
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
+                    <polyline
+                      fill="none"
+                      stroke="gray"
+                      strokeWidth="2"
+                      points={points}
+                    />
+                  </svg>
                 </div>
-                
+
                 {/* X-axis labels */}
                 <div className="flex justify-between text-xs text-gray-500 mt-2">
                   <span>Jan</span>
