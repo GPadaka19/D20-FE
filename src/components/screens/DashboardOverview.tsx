@@ -5,6 +5,10 @@ import Card from '../common/Card';
 
 const DashboardOverview: React.FC = () => {
   const confidenceData = [50, 20, 30, 60, 75, 60]; // Jan to Jun
+  const damageTypeData = {
+    labels: ["Potholes", "Cracks", "Patches", "Other"],
+    data: [75, 50, 25, 15]
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -60,40 +64,48 @@ const DashboardOverview: React.FC = () => {
       
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <Card title="Detection Frequency by Type">
+      <Card title="Detection Frequency by Type">
           <div className="h-64 p-4">
-            <div className="h-full w-full relative">
-              {/* Y-axis labels */}
-              <div className="absolute -left-5 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-2">
-                <span>100</span>
-                <span>75</span>
-                <span>50</span>
-                <span>25</span>
-                <span>0</span>
-              </div>
-              
-              {/* Chart area */}
-              <div className="ml-8 h-full flex flex-col">
-                <div className="flex-1 flex items-end space-x-8 border-b border-l border-gray-300 pb-6">
-                  <div className="flex flex-col items-center flex-1">
-                    <div className="bg-gray-400 w-16 h-[75%]"></div>
-                    <span className="text-xs text-gray-500 mt-2">Potholes</span>
-                  </div>
-                  <div className="flex flex-col items-center flex-1">
-                    <div className="bg-gray-300 w-16 h-[50%]"></div>
-                    <span className="text-xs text-gray-500 mt-2">Cracks</span>
-                  </div>
-                  <div className="flex flex-col items-center flex-1">
-                    <div className="bg-gray-200 w-16 h-[25%]"></div>
-                    <span className="text-xs text-gray-500 mt-2">Patches</span>
-                  </div>
-                  <div className="flex flex-col items-center flex-1">
-                    <div className="bg-gray-100 w-16 h-[15%]"></div>
-                    <span className="text-xs text-gray-500 mt-2">Other</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <TEChart
+              type="bar"
+              data={{
+                labels: damageTypeData.labels,
+                datasets: [
+                  {
+                    label: "Detection Count",
+                    data: damageTypeData.data,
+                    backgroundColor: [
+                      '#6b7280',
+                      '#9ca3af',
+                      '#d1d5db',
+                      '#e5e7eb'
+                    ],
+                    borderColor: [
+                      '#6b7280',
+                      '#9ca3af',
+                      '#d1d5db',
+                      '#e5e7eb'
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                      callback: function (value: number | string) {
+                        return value + "%";
+                      },
+                    },
+                  },
+                },
+              }}
+            />
           </div>
         </Card>
         
@@ -107,8 +119,8 @@ const DashboardOverview: React.FC = () => {
                   {
                     label: "Confidence Level",
                     data: confidenceData,
-                    backgroundColor: "rgba(59, 130, 246, 0.2)",
-                    borderColor: "rgba(59, 130, 246, 1)",
+                    backgroundColor: "#d4d4d8",
+                    borderColor: "rgba(107, 114, 128, 1)",
                     borderWidth: 2,
                     tension: 0.4,
                     fill: true,
