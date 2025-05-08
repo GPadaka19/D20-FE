@@ -1,17 +1,10 @@
 import React from 'react';
 import { Calendar, Map, BarChart2 } from 'lucide-react';
+import { TEChart } from "tw-elements-react";
 import Card from '../common/Card';
 
 const DashboardOverview: React.FC = () => {
   const confidenceData = [50, 20, 30, 60, 75, 60]; // Jan to Jun
-  const maxVal = 100;
-  const points = confidenceData
-    .map((val, idx) => {
-      const x = (idx / (confidenceData.length - 1)) * 100;
-      const y = 100 - (val / maxVal) * 100;
-      return `${x},${y}`;
-    })
-    .join(" ");
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -106,40 +99,38 @@ const DashboardOverview: React.FC = () => {
         
         <Card title="Detection Confidence Over Time">
           <div className="h-64 p-4">
-            <div className="h-full w-full relative">
-              {/* Y-axis labels */}
-              <div className="absolute -left-5 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-2">
-                <span>100%</span>
-                <span>75%</span>
-                <span>50%</span>
-                <span>25%</span>
-                <span>0%</span>
-              </div>
-
-              {/* Chart area */}
-              <div className="ml-8 h-full flex flex-col">
-                <div className="flex-1 border-b border-l border-gray-300 relative">
-                  <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
-                    <polyline
-                      fill="none"
-                      stroke="gray"
-                      strokeWidth="2"
-                      points={points}
-                    />
-                  </svg>
-                </div>
-
-                {/* X-axis labels */}
-                <div className="flex justify-between text-xs text-gray-500 mt-2">
-                  <span>Jan</span>
-                  <span>Feb</span>
-                  <span>Mar</span>
-                  <span>Apr</span>
-                  <span>May</span>
-                  <span>Jun</span>
-                </div>
-              </div>
-            </div>
+            <TEChart
+              type="line"
+              data={{
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                datasets: [
+                  {
+                    label: "Confidence Level",
+                    data: confidenceData,
+                    backgroundColor: "rgba(59, 130, 246, 0.2)",
+                    borderColor: "rgba(59, 130, 246, 1)",
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                      callback: function (value: number | string) {  // Tambahkan type annotation
+                        return value + "%";
+                      },
+                    },
+                  },
+                },
+              }}
+            />
           </div>
         </Card>
       </div>
