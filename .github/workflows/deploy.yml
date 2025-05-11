@@ -47,6 +47,5 @@ jobs:
             cd ~/D20-FE
             sudo docker compose down
             sudo docker rmi d20-fe-d20-frontend:latest || true
-            sudo docker rmi d20-frontend-d20-frontend:latest || true
             sudo docker compose build
             sudo docker compose up -d
