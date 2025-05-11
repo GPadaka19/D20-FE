@@ -50,10 +50,6 @@ jobs:
             sudo docker compose build
             sudo docker compose up -d
 
-      - name: Force failure for testing
-        run: |
-          echo "This is a forced failure" && exit 1
-
       - name: Send Telegram notification (Success)
         if: success()
         run: |
