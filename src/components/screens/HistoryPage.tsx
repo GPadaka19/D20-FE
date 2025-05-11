@@ -51,6 +51,7 @@ const historyItems = [
 
 const HistoryPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchField, setSearchField] = useState<'timestamp' | 'detections' | 'confidence'>('timestamp');
   const [sortField, setSortField] = useState('timestamp');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [filterSource, setFilterSource] = useState<'all' | 'upload' | 'camera'>('all');
@@ -66,7 +67,33 @@ const HistoryPage: React.FC = () => {
   
   // Filter and sort items
   const filteredItems = historyItems
-    .filter(item => filterSource === 'all' || item.source === filterSource)
+    .filter(item => {
+      const matchesSource = filterSource === 'all' || item.source === filterSource;
+      let value: string | number = item[searchField];
+      if (searchField === 'timestamp') {
+        value =
+          new Date(item.timestamp).toLocaleDateString() +
+          ' ' +
+          new Date(item.timestamp).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+          });
+      }
+      const query = searchQuery.toLowerCase();
+
+      if (!searchQuery) return matchesSource;
+
+      if (typeof value === 'string') {
+        return matchesSource && value.toLowerCase().includes(query);
+      }
+
+      if (typeof value === 'number') {
+        return matchesSource && value.toString().includes(query);
+      }
+
+      return matchesSource;
+    })
     .sort((a, b) => {
       const aValue = a[sortField as keyof typeof a];
       const bValue = b[sortField as keyof typeof b];
@@ -95,14 +122,25 @@ const HistoryPage: React.FC = () => {
       
       <Card>
         <div className="flex flex-col sm:flex-row justify-between gap-4 mb-6">
-          <div className="relative max-w-md w-full">
+          <div className="relative w-full max-w-md">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
+            <div className="absolute inset-y-0 right-0 pr-1 flex items-center">
+              <select
+                className="block border border-gray-300 rounded-md px-2 py-1 bg-white text-sm h-8"
+                value={searchField}
+                onChange={(e) => setSearchField(e.target.value as any)}
+              >
+                <option value="timestamp">Date/Time</option>
+                <option value="detections">Detections</option>
+                <option value="confidence">Confidence</option>
+              </select>
+            </div>
             <input
               type="text"
-              placeholder="Search history..."
-              className="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm"
+              placeholder={`Search by ${searchField}...`}
+              className="block w-full pl-10 pr-24 py-2 border border-gray-300 rounded-md shadow-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
