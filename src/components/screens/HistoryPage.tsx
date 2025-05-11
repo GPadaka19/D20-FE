@@ -71,14 +71,7 @@ const HistoryPage: React.FC = () => {
       const matchesSource = filterSource === 'all' || item.source === filterSource;
       let value: string | number = item[searchField];
       if (searchField === 'timestamp') {
-        value =
-          new Date(item.timestamp).toLocaleDateString() +
-          ' ' +
-          new Date(item.timestamp).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-          });
+        value = new Date(item.timestamp).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' });
       }
       const query = searchQuery.toLowerCase();
 
