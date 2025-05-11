@@ -253,7 +253,7 @@ const HistoryPage: React.FC = () => {
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 text-gray-400 mr-2" />
                       <span>
-                        {new Date(item.timestamp).toLocaleDateString()}
+                        {new Date(item.timestamp).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' })}
                       </span>
                       <span className="ml-2 text-gray-500 text-sm">
                         {new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
