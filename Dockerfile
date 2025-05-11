@@ -1,8 +1,11 @@
 # Base image
 FROM nginx:alpine
 
-# Copy build hasil React ke direktori default NGINX
+# Copy hasil build
 COPY dist/ /usr/share/nginx/html
+
+# Ganti default config NGINX
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 3000
