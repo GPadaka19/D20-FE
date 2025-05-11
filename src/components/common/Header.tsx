@@ -14,7 +14,9 @@ const Header: React.FC<HeaderProps> = ({ title = 'Pothole Detection System' }) =
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <span className="font-bold text-xl text-gray-800">{title}</span>
+            <Link to="/" className="font-bold text-xl text-gray-800 hover:underline">
+              {title}
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
