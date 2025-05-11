@@ -50,9 +50,18 @@ jobs:
             sudo docker compose build
             sudo docker compose up -d
 
-      - name: Send Telegram notification
+      - name: Send Telegram notification (Success)
+        if: success()
         run: |
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-            -d text="✅ CI/CD Sukses!\nProject *D20-FE* berhasil dideploy ke VPS 🎉" \
+            -d text="✅ CI/CD Sukses!%0AProject *D20-FE* berhasil dideploy ke VPS 🎉" \
+            -d parse_mode=Markdown
+
+      - name: Send failure Telegram notification
+        if: failure()
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="❌ CI/CD Gagal!%0AProject *D20-FE* gagal dideploy ke VPS ⚠️" \
             -d parse_mode=Markdown
