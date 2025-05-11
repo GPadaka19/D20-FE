@@ -14,7 +14,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       </main>
       <footer className="bg-white py-4 border-t border-gray-200">
         <div className="container mx-auto px-4 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} Pothole Detection System | Research Project
+          © {new Date().getFullYear()} Pothole Detection System — Developed by <a href="https://github.com/GPadaka19" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">GPadaka19</a> as part of a research project.
         </div>
       </footer>
     </div>
