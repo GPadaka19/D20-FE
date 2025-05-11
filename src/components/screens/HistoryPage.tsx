@@ -108,7 +108,7 @@ const HistoryPage: React.FC = () => {
     <div className="max-w-6xl mx-auto">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Detection History</h1>
-        <h1 className="text-3xl font-bold text-gray-800">TEST CI/CD</h1>
+        <h1 className="text-3xl font-bold text-gray-800">TEST CI/CD #9</h1>
         <p className="text-gray-600 mt-2">
           View and manage your previous detection results.
         </p>
