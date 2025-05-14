@@ -49,6 +49,7 @@ jobs:
             sudo docker rmi d20-fe-d20-frontend:latest || true
             sudo docker compose build
             sudo docker compose up -d
+            sudo docker image prune -f
 
       - name: Send Telegram notification (Success)
         if: success()
