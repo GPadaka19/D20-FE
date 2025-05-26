@@ -3,7 +3,7 @@ name: Frontend Build & CI/CD VPS
 on:
   push:
     branches:
-      - main
+      - prod
 
 jobs:
   deploy:
