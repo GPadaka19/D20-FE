@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: d20-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-d20user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-d20password}
+      POSTGRES_DB: ${POSTGRES_DB:-d20db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - d20-network
+
+volumes:
+  postgres_data:
+    name: d20-postgres-data
+
+networks:
+  d20-network:
+    name: d20-network
