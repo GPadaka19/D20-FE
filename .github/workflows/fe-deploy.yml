@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: FrontendBuild & CI/CD VPS
+    name: Frontend Build & CI/CD VPS
     runs-on: ubuntu-latest
 
     steps:
