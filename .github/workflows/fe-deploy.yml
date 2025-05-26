@@ -16,6 +16,7 @@ jobs:
 
       - name: Install dependencies & build project
         run: |
+          cd frontend
           npm install
           npm run build
 
@@ -34,7 +35,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "dist,Dockerfile,docker-compose.yml,nginx.conf"
+          source: "frontend/dist,frontend/Dockerfile,frontend/docker-compose.yml,frontend/nginx.conf"
           target: "~/D20-FE"
 
       - name: Deploy via SSH
